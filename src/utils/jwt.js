@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 /**
  * TODO: Signs a JWT token with the given payload
@@ -28,7 +28,9 @@ import jwt from 'jsonwebtoken';
  * - Keep JWT_SECRET secure and never commit it to version control
  */
 export function signToken(payload) {
-  // Your code here
+  return jwt.sign({ payload }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
 }
 
 /**

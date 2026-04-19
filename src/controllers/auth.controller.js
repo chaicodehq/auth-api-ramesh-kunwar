@@ -48,6 +48,42 @@ export async function register(req, res, next) {
 export async function login(req, res, next) {
   try {
     // Your code here
+    const { email, password } = req.body;
+    const user = await User.findOne({ email }).select("+password");
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid credentials",
+        data: null,
+      });
+    }
+
+    const isMatchPassword = await bcrypt.compare(password, user.password);
+
+    if (!isMatchPassword) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid credentials",
+        data: null,
+      });
+    }
+
+    const token = signToken(user._id);
+
+    res.cookie("token", token, {
+      maxAge: 86400000, // 24 hours
+      httpOnly: true,
+      secure: true,
+      sameSite: "Strict",
+    });
+
+    const { password: _, ...safeUser } = user.toObject();
+    return res.json({
+      success: true,
+      message: "User Logged In Successfully",
+      data: safeUser,
+    });
   } catch (error) {
     next(error);
   }

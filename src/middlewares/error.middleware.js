@@ -49,6 +49,6 @@ export function errorHandler(error, req, res, next) {
   // Fallback — always end with this, never call next() here
   return res.status(500).json({
     success: false,
-    message: "Something went wrong. Please try again later.",
+    message: "Something went wrong. Please try again later. " + error,
   });
 }
