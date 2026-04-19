@@ -1,7 +1,11 @@
-import { Router } from 'express';
-import { listUsers, getUser, deleteUser } from '../controllers/user.controller.js';
-import { authenticate } from '../middlewares/auth.middleware.js';
-import { requireRole } from '../middlewares/role.middleware.js';
+import { Router } from "express";
+import {
+  listUsers,
+  getUser,
+  deleteUser,
+} from "../controllers/user.controller.js";
+import { authenticate } from "../middlewares/auth.middleware.js";
+import { requireRole } from "../middlewares/role.middleware.js";
 
 /**
  * TODO: Define user routes (all require admin role)
@@ -17,5 +21,9 @@ import { requireRole } from '../middlewares/role.middleware.js';
 const router = Router();
 
 // Your routes here
+router.get("/", listUsers);
+router.get("/:id", getUser);
+
+router.delete("/:id", deleteUser);
 
 export default router;
