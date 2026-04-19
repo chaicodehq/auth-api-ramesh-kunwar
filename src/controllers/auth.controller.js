@@ -69,7 +69,7 @@ export async function login(req, res, next) {
       });
     }
 
-    const token = signToken(user._id);
+    const token = signToken({ id: user._id });
 
     res.cookie("token", token, {
       maxAge: 86400000, // 24 hours
@@ -98,6 +98,12 @@ export async function login(req, res, next) {
 export async function me(req, res, next) {
   try {
     // Your code here
+    const user = await User.findById(req.user.id);
+    return res.status(200).json({
+      success: true,
+      message: "User fetched successfully",
+      data: user,
+    });
   } catch (error) {
     next(error);
   }

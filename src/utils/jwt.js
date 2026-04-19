@@ -68,5 +68,5 @@ export function signToken(payload) {
  * - Never skip verification for "performance" reasons
  */
 export function verifyToken(token) {
-  // Your code here
+  return jwt.verify(token, process.env.JWT_SECRET);
 }
