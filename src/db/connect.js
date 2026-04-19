@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 /**
  * TODO: Connect to MongoDB
@@ -9,4 +9,11 @@ import mongoose from 'mongoose';
  */
 export async function connectDB(uri) {
   // Your code here
+  try {
+    const conn = await mongoose.connect(uri);
+    console.log("MongoDB Connected Successfully");
+    return conn;
+  } catch (error) {
+    console.log("DB Connection failed: " + error);
+  }
 }
